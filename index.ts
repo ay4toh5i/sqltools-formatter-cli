@@ -34,11 +34,14 @@ for (const target of targets) {
   }
 
   for await (const entry of expandGlob(target)) {
-    console.log(entry.path);
     const text = await Deno.readTextFile(entry.path);
 
     const formatted = formatter.format(text, options);
 
-    await Deno.writeTextFile(entry.path, formatted);
+    if (text !== formatted) {
+      console.log(entry.path);
+      await Deno.writeTextFile(entry.path, formatted);
+    }
   }
 }
+
