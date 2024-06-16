@@ -36,7 +36,7 @@ for (const target of targets) {
   for await (const entry of expandGlob(target)) {
     const text = await Deno.readTextFile(entry.path);
 
-    const formatted = formatter.format(text, options);
+    const formatted = formatter.format(text, options) + "\n";
 
     if (text !== formatted) {
       console.log(entry.path);
@@ -44,4 +44,3 @@ for (const target of targets) {
     }
   }
 }
-
